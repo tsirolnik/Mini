@@ -1,0 +1,8 @@
+For .htaccess problems: Open /etc/apache2/apache2.conf
+
+Change "AllowOverride None" to "AllowOverride All"
+
+turn on the following:
+
+a2enmod rewrite
+a2enmod headers
