@@ -1,5 +1,6 @@
+# nginx configuration
 location / {
 if (!-e $request_filename){
-rewrite ^(.*)$ /index.php break;
+rewrite ^(.*)$ /index.php?mini_url=$1&$query_string break;
 }
 }

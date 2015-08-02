@@ -18,6 +18,10 @@ class __TwigTemplate_cdad3cda6ee0b3fafffdcc9fdf1935958c76aed3420570cd5dde78c0a88
         // line 1
         echo "Sup?
 ";
+        // line 2
+        echo twig_escape_filter($this->env, (isset($context["var"]) ? $context["var"] : null), "html", null, true);
+        echo "
+";
     }
 
     public function getTemplateName()
@@ -25,8 +29,13 @@ class __TwigTemplate_cdad3cda6ee0b3fafffdcc9fdf1935958c76aed3420570cd5dde78c0a88
         return "index.html";
     }
 
+    public function isTraitable()
+    {
+        return false;
+    }
+
     public function getDebugInfo()
     {
-        return array (  19 => 1,);
+        return array (  22 => 2,  19 => 1,);
     }
 }
