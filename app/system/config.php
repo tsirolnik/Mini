@@ -15,7 +15,13 @@ $config = [
     'twig_enable_cache' => true,
     'url_param'         => 'mini_url',
     'controller_sufix'  => 'Controller',
-    'module_suffix'     => 'Module'
+    'module_suffix'     => 'Module',
+    'db'                => [
+                'host'      => 'localhost',
+                'name'  => 'testing',
+                'user'      => 'root',
+                'password'  => '123456'
+        ]
 ];
 
 unset($base);
