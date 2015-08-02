@@ -3,6 +3,7 @@ namespace Mini;
 
 // Get the configuration file first.
 require('./app/system/config.php');
+require($config['dir_system'] . 'SqlManager.php');
 require($config['dir_system'] . 'BaseController.php');
 require($config['dir_system'] . 'BaseModule.php');
 require($config['dir_system'] . 'BaseModel.php');

@@ -16,7 +16,6 @@ class ModuleManager {
         if (NULL === self::$instance) {
             self::$instance = new ModuleManager($config);
         }
-
         return self::$instance;
     }
 
@@ -33,7 +32,11 @@ class ModuleManager {
         }
         return NULL;
     }
-
+    /*
+    *
+    *
+    *
+    */
     public function loadModule($moduleName, $args=[]) {
         // Check if the module have been already loaded
         if(isset($this->modules[$moduleName])) {
