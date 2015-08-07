@@ -224,7 +224,8 @@ class SqlManager {
 			} else {
 				$connection_string = $driver.':host='.$host.';dbname='.$name;
 			}
-
+			// Declare the connection's encoding
+			$connection_string .= ';charset=utf8';
 			// add the port if one was specified
 			if (!empty($port)) {
 				$connection_string .= ";port=$port";
@@ -235,7 +236,7 @@ class SqlManager {
 
 			// set the error mode
 			$new_connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-
+			$new_connection->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
 			// return the new connection
 			return $new_connection;
 		}
@@ -349,9 +350,9 @@ class SqlManager {
 	 * @param bool $use_master (optional) - use the master db for this read
 	 * @return mixed - associate representing the fetched table row, false on failure
 	 */
-	public function select($table, $params = null, $limit = null, $start = null, $order_by=null, $use_master = false) {
+	public function select($table, $params = null, $selection = '*', $limit = null, $start = null, $order_by=null, $use_master = false) {
 		// building query string
-		$sql_str = "SELECT * FROM $table";
+		$sql_str = "SELECT $selection FROM $table";
 		// append WHERE if necessary
 		$sql_str .= ( count($params)>0 ? ' WHERE ' : '' );
 
@@ -446,8 +447,8 @@ class SqlManager {
 	 * @param array $order_by (optional) - an array with order by clause
 	 * @return mixed - associate representing the fetched table row, false on failure
 	 */
-	public function selectMaster($table, $params = array(), $limit = null, $start = null, $order_by=null) {
-		return $this->select($table, $params, $limit, $start, $order_by, true);
+	public function selectMaster($table, $params = array(), $selection = '*', $limit = null, $start = null, $order_by=null) {
+		return $this->select($table, $params, $selection, $limit, $start, $order_by, true);
 	}
 
 
@@ -460,8 +461,8 @@ class SqlManager {
 	 * @param array $order_by (optional) - an array with order by clause
 	 * @return mixed - associate representing the fetched table row, false on failure
 	 */
-	public function selectFirst($table, $params = array(), $order_by=null) {
-		return $this->select($table, $params, 1, null, $order_by);
+	public function selectFirst($table, $params = array(), $selection = '*', $order_by=null) {
+		return $this->select($table, $params, $selection, 1, null, $order_by);
 	}
 
 
@@ -474,8 +475,8 @@ class SqlManager {
 	 * @param array $order_by (optional) - an array with order by clause
 	 * @return mixed - associate representing the fetched table row, false on failure
 	 */
-	public function selectFirstMaster($table, $params = array(), $order_by=null) {
-		return $this->select($table, $params, 1, null, $order_by, true);
+	public function selectFirstMaster($table, $params = array(), $selection = '*', $order_by=null) {
+		return $this->select($table, $params, $selection, 1, null, $order_by, true);
 	}
 
 
