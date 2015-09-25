@@ -12,7 +12,7 @@ namespace Mini;
     private     $data;
     private     $viewFolder;
 
-    function __construct() {
+    public function __construct() {
         global $config;
         $this->config = $config;
         $this->data = [];
@@ -22,7 +22,7 @@ namespace Mini;
         \Twig_Autoloader::register();
     }
 
-    function setViewFolder($view) {
+    public function setViewFolder($view) {
         $this->viewFolder = $view;
         $loader = new \Twig_Loader_Filesystem($this->config['dir_views'] . $this->viewFolder);
         $this->twig = new \Twig_Environment($loader, [
@@ -31,22 +31,27 @@ namespace Mini;
         ]);
     }
 
-    function loadView($view) {
+    public function loadView($view) {
         if(file_exists($this->config['dir_views'] . $this->viewFolder . '/' . $view)) {
             echo $this->twig->render($view, $this->data);
         }
     }
 
-    function bind($name, $value) {
+    public function bind($name, $value) {
         $this->data[$name] = $value;
     }
 
-    function bindSet($bindingSet) {
+    public function bindSet($bindingSet) {
       $this->data += $bindingSet;
     }
 
-    function clearBinding() {
+    public function clearBinding() {
         $this->data = [];
+    }
+
+    public function redirect($direction) {
+        header("Location: $direction");
+        die();
     }
 
   }

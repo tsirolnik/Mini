@@ -35,22 +35,19 @@ class ModelManager {
         return NULL;
     }
 
-    public function loadmodel($modelName, $args=[]) {
+    public function loadmodel($modelName, $args=null) {
 
-        $modelFile = $this->config['dir_models'] . "/" . $modelName . ".php";
+        $modelFile = $this->config['dir_base'] . $this->config['dir_models'] . "/" . $modelName . $this->config['model_suffix'] . ".php";
 
         if (file_exists($modelFile)) {
             require_once($modelFile);
-            $reflect = new \ReflectionClass($modelName);
+            $reflect = new ReflectionClass($modelName);
 
             $this->models[$modelName] = $reflect->newInstanceWithoutConstructor();
 
             call_user_func_array(array($this->models[$modelName], "__construct"), $args);
 
             return $this->models[$modelName];
-        } else {
-            echo 'Model ' . $modelName . ' not found.';
-            echo 'Model file looked for "' . $modelFile . '"';
         }
     }
 }
